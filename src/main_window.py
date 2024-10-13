@@ -68,7 +68,7 @@ class MainWindow(QMainWindow):
 
     def date_selected(self, date: QDate) -> None:
         """ Updates the data after the date change """
-        self.set_date(date)
+        self.set_date(date.toString())
         self.calendar.close()
 
     def open_add_dish_dialog(self, dish_name: str) -> None:
