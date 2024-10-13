@@ -138,6 +138,7 @@ class MainWindow(QMainWindow):
             self.save_dish(dish_name, calories, proteins, fats, carbohydrates)
             self.save_meal(dish_name, calories, proteins, fats, carbohydrates, self.date)
             self.dialog.close()
+            self.load_dishes_for_date(self.date)
 
         except ValueError:
             QMessageBox.warning(self, 'Input Error', 'Please enter a valid number for calories.')
@@ -272,20 +273,20 @@ class MainWindow(QMainWindow):
                         self.dish_table.setItem(row_position, 2, QTableWidgetItem(f"{dish['proteins']:.2f}g"))
                         self.dish_table.setItem(row_position, 3, QTableWidgetItem(f"{dish['fats']:.2f}g"))
                         self.dish_table.setItem(row_position, 4, QTableWidgetItem(f"{dish['carbohydrates']:.2f}g"))
-                    total_calories += dish['calories']
-                    total_proteins += dish['proteins']
-                    total_fats += dish['fats']
-                    total_carbohydrates += dish['carbohydrates']
-
-            total_row_position = self.dish_table.rowCount()
-            self.dish_table.insertRow(total_row_position)
-            self.dish_table.setItem(total_row_position, 0, QTableWidgetItem("Total"))
-            self.dish_table.setItem(total_row_position, 1, QTableWidgetItem(f"{total_calories:.2f} kcal"))
-            self.dish_table.setItem(total_row_position, 2, QTableWidgetItem(f"{total_proteins:.2f}g"))
-            self.dish_table.setItem(total_row_position, 3, QTableWidgetItem(f"{total_fats:.2f}g"))
-            self.dish_table.setItem(total_row_position, 4, QTableWidgetItem(f"{total_carbohydrates:.2f}g"))
-            for column in range(5):
-                item = self.dish_table.item(total_row_position, column)
-                item.setBackground(QtGui.QBrush(QtGui.QColor(200, 200, 255)))
-                item.setForeground(QtGui.QBrush(QtGui.QColor(0, 0, 0)))
+                        total_calories += dish['calories']
+                        total_proteins += dish['proteins']
+                        total_fats += dish['fats']
+                        total_carbohydrates += dish['carbohydrates']
+            if total_calories != 0:
+                total_row_position = self.dish_table.rowCount()
+                self.dish_table.insertRow(total_row_position)
+                self.dish_table.setItem(total_row_position, 0, QTableWidgetItem("Total"))
+                self.dish_table.setItem(total_row_position, 1, QTableWidgetItem(f"{total_calories:.2f} kcal"))
+                self.dish_table.setItem(total_row_position, 2, QTableWidgetItem(f"{total_proteins:.2f}g"))
+                self.dish_table.setItem(total_row_position, 3, QTableWidgetItem(f"{total_fats:.2f}g"))
+                self.dish_table.setItem(total_row_position, 4, QTableWidgetItem(f"{total_carbohydrates:.2f}g"))
+                for column in range(5):
+                    item = self.dish_table.item(total_row_position, column)
+                    item.setBackground(QtGui.QBrush(QtGui.QColor(200, 200, 255)))
+                    item.setForeground(QtGui.QBrush(QtGui.QColor(0, 0, 0)))
 
